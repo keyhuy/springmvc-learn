@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>用户操作测试</title>
+</head>
+<body>
+
+    <!-- 测试获取全部用户信息 -->
+    <a th:href="@{/user}">获取全部用户信息</a><br/>
+
+    <!-- 测试根据id获取单个用户信息 -->
+    <a th:href="@{/user/1}">根据id获取单个用户信息</a><br/>
+
+    <!-- 测试添加用户信息 -->
+    <form th:action="@{/user}" method="post">
+        用户名：<input type="text" name="username"><br/>
+        密码：<input type="password" name="password"><br/>
+        <input type="submit" value="添加信息">
+    </form>
+
+    <div>+-------------------------------------------------------+</div><br/>
+
+    <!-- 测试PUT请求，即修改操作 -->
+    <form th:action="@{/user}" method="post">
+      <!-- 添加隐藏域 -->
+      <input type="hidden" name="_method" value="put">
+
+      用户名：<input type="text" name="username"><br/>
+      密码：<input type="password" name="password"><br/>
+      <input type="submit" value="修改信息">
+    </form>
+
+    <div>+-------------------------------------------------------+</div><br/>
+
+    <!-- 测试删除用户信息 -->
+    <!-- 1. 先创建一个超链接 -->
+    <a id="delAId" @click="deleteUser" th:href="@{/user/2}">删除用户信息</a><br/>
+
+    <!-- 2. 创建一个表单，只有隐藏域一个表单项 -->
+    <form id="delFormId" method="post">
+        <input type="hidden" name="_method" value="delete">
+    </form>
+
+    <!-- 3. 导入vue.js文件，使用vue处理点击事件 -->
+    <script type="text/javascript" th:src="@{/static/js/vue.js}"></script>
+    <script type="text/javascript">
+        // 使用vue处理点击事件
+        let vue = new Vue({
+            el:"#delAId",
+            methods:{
+                // event表示当前事件
+                deleteUser:function (event) {
+                    // 通过id获取表单元素
+                    let delForm = document.getElementById("delFormId");
+
+                    // 将超链接的href属性值赋值给表单的action属性
+                    delForm.action = event.target.href;
+
+                    // 提交表单
+                    delForm.submit();
+
+                    // 阻止超链接的默认跳转行为
+                    event.preventDefault();
+                }
+            }
+        });
+
+    </script>
+</body>
+</html>

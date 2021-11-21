@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>文件下载测试</title>
+</head>
+<body>
+
+      <!-- 创建一个下载超链接，并将文件名作为请求参数传给后台 -->
+      <a th:href="@{/fileDownload(filename='code.png')}">点击下载图片</a><br/>
+
+      <div>+-----------------------------------------------------+</div>
+      <!-- 创建一个表单，用于上传文件 -->
+      <form th:action="@{/fileUpload}" method="post" enctype="multipart/form-data">
+          用户名：<input type="text" name="username"><br/>
+          头像：<input type="file" name="uploadFile"><br/>
+          <input type="submit" value="上传">
+      </form>
+</body>
+</html>
